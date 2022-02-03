@@ -13,7 +13,7 @@ import logging
 
 import voluptuous as vol
 
-from homeassistant.const import CONF_API_KEY, CONF_API_SECRET, CONF_NAME
+from homeassistant.const import CONF_API_KEY, CONF_NAME
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.discovery import load_platform
 from homeassistant.util import Throttle
@@ -23,6 +23,7 @@ __version__ = "1.0.1"
 DOMAIN = "sbicrypto_pool"
 
 DEFAULT_NAME = "SBICrypto"
+CONF_API_SECRET = "api_secret"
 CONF_MINING = "miners"
 
 SCAN_INTERVAL = timedelta(minutes=1)
