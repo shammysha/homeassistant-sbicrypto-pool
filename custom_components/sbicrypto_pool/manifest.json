@@ -1,0 +1,11 @@
+{
+  "domain": "sbicrypto_pool",
+  "name": "SBICrypto Pool",
+  "documentation": "https://github.com/shammysha/homeassistant-sbicrypto-pool",
+  "issue_tracker": "https://github.com/shammysha/homeassistant-sbicrypto-pool/issues",
+  "dependencies": [],
+  "version": "1.0.1",
+  "codeowners": [
+    "@shammysha"
+  ]
+}
