@@ -40,7 +40,7 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
                 vol.Required(CONF_API_KEY): cv.string,
                 vol.Required(CONF_API_SECRET): cv.string,
-                vol.Optional(CONF_MINING, default=[]): vol.All(
+                vol.Required(CONF_MINING): vol.All(
                     cv.ensure_list, [cv.string]
                 ),                
             }
