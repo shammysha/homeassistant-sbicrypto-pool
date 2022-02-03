@@ -156,7 +156,7 @@ class SBICryptoData:
             return False                                       
             
             
-class SBICryptoPoolClient(Client):
+class SBICryptoPoolClient():
     API_VERSION = 'v2'
     API_URL = 'https://pool-api.sbicrypto.com/api/external/{}'
     
