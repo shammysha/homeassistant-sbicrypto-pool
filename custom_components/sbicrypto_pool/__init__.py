@@ -37,7 +37,6 @@ CONFIG_SCHEMA = vol.Schema(
         DOMAIN: vol.Schema(
             {
                 vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
-                vol.Optional(CONF_DOMAIN, default=DEFAULT_DOMAIN): cv.string,
                 vol.Required(CONF_API_KEY): cv.string,
                 vol.Required(CONF_API_SECRET): cv.string,
                 vol.Optional(CONF_MINING, default=[]): vol.All(
