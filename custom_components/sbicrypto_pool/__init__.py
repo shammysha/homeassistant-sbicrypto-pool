@@ -145,10 +145,10 @@ class SBICryptoData:
                                 status["hashrate"][1] = status["hashrate"][1] / status["numOfWorkers"]
                                 status["hashrate"][2] = status["hashrate"][2] / status["numOfWorkers"]                         
                                 
-                                self.mining["accounts"][accName].update({"workers": workers})
+                                self.mining["accounts"][accName].update({ "workers": workers })
                                 _LOGGER.debug(f"Mining workers updated for {accName} from pool-api.sbicrypto.com")
                         
-                        self.mining["accounts"][accName].update({"status": status)
+                        self.mining["accounts"][accName].update({ "status": status })
                         _LOGGER.debug(f"Mining status updated for {account} ({algoname}) from pool-api.sbicrypto.com")    
                                       
         except (SBICryptoAPIException, SBICryptoRequestException) as e:
@@ -251,16 +251,16 @@ class SBICryptoPoolClient(Client):
 
     @staticmethod
     def _handle_response(response: requests.Response):
-        """Internal helper for handling API responses from the Binance server.
+        """Internal helper for handling API responses from the SBICrypto server.
         Raises the appropriate exceptions when necessary; otherwise, returns the
         response.
         """
         if not (200 <= response.status_code < 300):
-            raise BinanceAPIException(response, response.status_code, response.text)
+            raise SBICryptoAPIException(response, response.status_code, response.text)
         try:
             return response.json()
         except ValueError:
-            raise BinanceRequestException('Invalid Response: %s' % response.text)
+            raise SBICryptoRequestException('Invalid Response: %s' % response.text)
 
 
     def _create_api_url(self, path: str ) -> str:
@@ -293,3 +293,30 @@ class SBICryptoPoolClient(Client):
             https://sbicrypto-docs.github.io/apidocs/spot/en/#acquiring-coinname-market_data
         """
         return self._request_api('get', 'workers')        
+
+        
+class SBICryptoAPIException(Exception):
+
+    def __init__(self, response, status_code, text):
+        self.code = 0
+        try:
+            json_res = json.loads(text)
+        except ValueError:
+            self.message = 'Invalid JSON error message from SBICrypto: {}'.format(response.text)
+        else:
+            self.code = json_res['code']
+            self.message = json_res['msg']
+        self.status_code = status_code
+        self.response = response
+        self.request = getattr(response, 'request', None)
+
+    def __str__(self):  # pragma: no cover
+        return 'APIError(code=%s): %s' % (self.code, self.message)
+
+
+class SBICryptoRequestException(Exception):
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return 'SBICryptoRequestException: %s' % self.message
