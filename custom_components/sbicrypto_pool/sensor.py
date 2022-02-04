@@ -65,7 +65,7 @@ class SBICryptoWorkerSensor(SensorEntity):
     def __init__(self, sbicrypto_data, prefix, name, state, lastShareTime, subaccountId, subaccount, hashrates):
         """Initialize the sensor."""
         self._sbicrypto_data = sbicrypto_data
-        self._name = f"{prefix} {account}.{name} worker"
+        self._name = f"{prefix} {subaccount}.{name} worker"
         self._account = subaccount
         self._worker = name
         self._status = state
@@ -168,7 +168,7 @@ class SBICryptoStatusSensor(SensorEntity):
     def __init__(self, sbicrypto_data, prefix, name, coin, workerStatus, numOfWorkers, hashrate):
         """Initialize the sensor."""
         self._sbicrypto_data = sbicrypto_data
-        self._name = f"{prefix} {account} status"
+        self._name = f"{prefix} {name} status"
         self._account = name
         self._coin = coin
         self._hrate10m = hashrate[0]
