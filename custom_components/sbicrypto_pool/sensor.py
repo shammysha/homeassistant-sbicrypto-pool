@@ -35,7 +35,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
     
-    elif all(i in discovery_info for i in ["prefix", "name", "state", "lastShareTime", "subaccountId", "subaccount", "hashrates"):
+    elif all(i in discovery_info for i in ["prefix", "name", "state", "lastShareTime", "subaccountId", "subaccount", "hashrates"]):
         prefix = discovery_info["prefix"]
         name = discovery_info["name"]
         state = discovery_info["state"]
