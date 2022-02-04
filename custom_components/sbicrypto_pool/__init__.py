@@ -158,7 +158,7 @@ class SBICryptoData:
             
             
 class SBICryptoPoolClient():
-    API_VERSION = 'v2'
+    API_VERSION = 'v1'
     API_URL = 'https://pool-api.sbicrypto.com/api/external/{}'
     
     REQUEST_TIMEOUT: float = 10    
@@ -306,8 +306,8 @@ class SBICryptoAPIException(Exception):
         except ValueError:
             self.message = 'Invalid JSON error message from SBICrypto: {}'.format(response.text)
         else:
-            self.error = json_res['error']
-            self.description = json_res['error_description']
+            self.error = json_res.get("error", "")
+            self.description = json_res.get("error_description", "")
             
         self.status_code = status_code
         self.response = response
