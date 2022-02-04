@@ -104,8 +104,6 @@ class SBICryptoData:
                         accName = account["subaccountName"]
                         accCoin = account["currentMiningCurrency"]["code"].lower()
                         
-                        coins[account["currentMiningCurrency"]["id"]] = accCoin
-                        
                         self.mining["accounts"][accName] = {}                                                
                         
                         workers = []
