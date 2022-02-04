@@ -144,7 +144,7 @@ class SBICryptoData:
                                     status["numOfWorkers"] += 1
                                     
                             if workers:
-                                status["hashrate"] = [  hr / status["numOfWorkers"] for hr in status["hashrate"] ]
+                                status["hashrate"] = [  round(hr / status["numOfWorkers"]) for hr in status["hashrate"] ]
                                 
                                 self.mining["accounts"][accName].update({ "workers": workers })
                                 _LOGGER.debug(f"Mining workers updated for {accName} from pool-api.sbicrypto.com")
