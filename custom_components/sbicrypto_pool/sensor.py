@@ -36,7 +36,7 @@ _LOGGER = logging.getLogger(__name__)
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Setup the SBICrypto sensors."""
 
-    _LOGGER.debug(f"discovery_info")
+    _LOGGER.debug(f"discovery_info: {discovery_info}")
 
     if discovery_info is None:
         return
