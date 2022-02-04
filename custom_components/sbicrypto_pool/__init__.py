@@ -301,6 +301,7 @@ class SBICryptoAPIException(Exception):
     def __init__(self, response, status_code, text):
         self.error = ''
         try:
+            _LOGGER.debug(f"SBICryptoAPIException: {response} - {status_code}. {text}")
             json_res = json.loads(text)
         except ValueError:
             self.message = 'Invalid JSON error message from SBICrypto: {}'.format(response.text)
