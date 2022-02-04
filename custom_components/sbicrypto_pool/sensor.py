@@ -202,7 +202,7 @@ class SBICryptoStatusSensor(SensorEntity):
     @property
     def icon(self):
         """Icon to use in the frontend, if any."""
-        return f"mdi:currency-{self._coin}' . 
+        return f"mdi:currency-{self._coin}" 
 
     @property
     def extra_state_attributes(self):

@@ -69,8 +69,8 @@ def setup(hass, config):
                     load_platform(hass, "sensor", DOMAIN, worker, config)
                     
             if "status" in type:
-                status["prefix"] = name
-                load_platform(hass, "sensor", DOMAIN, status, config)                                        
+                type["status"]["prefix"] = name
+                load_platform(hass, "sensor", DOMAIN, type["status"], config)                                        
     return True
 
 
