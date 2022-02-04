@@ -116,13 +116,14 @@ class SBICryptoData:
                             }, 
                             "numOfWorkers": 0, 
                             "hashrate": [ 0, 0, 0 ],
-                            "coin": accCoin 
+                            "coin": accCoin,
+                            "name": accName
                         }
                         
                         if workers_list:
                             for worker in workers_list:
                                 if accName == worker["subaccount"]:
-                                    worker["hashrates"] = [ hr * 1000000 for hr in worker["hashrates"] ]
+                                    worker["hashrates"] = [ round(hr * 1000000) for hr in worker["hashrates"] ]
                                     worker.pop("coinId", None)
                                     
                                     workers.append(worker)
