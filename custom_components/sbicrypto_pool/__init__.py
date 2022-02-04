@@ -150,7 +150,7 @@ class SBICryptoData:
                                 _LOGGER.debug(f"Mining workers updated for {accName} from pool-api.sbicrypto.com")
                         
                         self.mining["accounts"][accName].update({ "status": status })
-                        _LOGGER.debug(f"Mining status updated for {account} ({algoname}) from pool-api.sbicrypto.com")    
+                        _LOGGER.debug(f"Mining status updated for {accName} from pool-api.sbicrypto.com")    
                                       
         except (SBICryptoAPIException, SBICryptoRequestException) as e:
             _LOGGER.error(f"Error fetching mining data from pool-api.sbicrypto.com: {e.message}")
