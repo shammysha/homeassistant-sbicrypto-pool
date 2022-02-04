@@ -6,9 +6,6 @@ from datetime import datetime, timezone
 from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.components.sensor import SensorEntity
 
-import logging
-
-
 ATTRIBUTION = "Data provided by SBICrypto"
 
 ATTR_WORKER_STATUS = "status"
@@ -31,12 +28,8 @@ ATTR_COIN = "coin"
 
 DATA_SBICRYPTO = "sbicrypto_pool_cache"
 
-_LOGGER = logging.getLogger(__name__)
-
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Setup the SBICrypto sensors."""
-
-    _LOGGER.debug(f"discovery_info: {discovery_info}")
 
     if discovery_info is None:
         return
@@ -116,9 +109,9 @@ class SBICryptoWorkerSensor(SensorEntity):
 
         data = {
             ATTR_ATTRIBUTION: ATTRIBUTION,
-            ATTR_STATUS_HRATE10M: f"{self._hrate10m}",
-            ATTR_STATUS_HRATE1H: f"{self._hrate1h}",            
-            ATTR_STATUS_HRATE24H: f"{self._hrate24h}",
+            ATTR_STATUS_HRATE10M: float(self._hrate10m),
+            ATTR_STATUS_HRATE1H: float(self._hrate1h),            
+            ATTR_STATUS_HRATE24H: float(self._hrate24h),
             ATTR_WORKER_WORKER: f"{self._worker}",
             ATTR_WORKER_UPDATE: datetime.fromisoformat(self._update),
             ATTR_ACCOUNT: f"{self._account}"
@@ -177,15 +170,15 @@ class SBICryptoStatusSensor(SensorEntity):
         self._name = f"{prefix} {name} status"
         self._account = name
         self._coin = coin
-        self._hrate10m = hashrate[0]
-        self._hrate1h = hashrate[1]
-        self._hrate24h = hashrate[2]
-        self._total_workers = numOfWorkers
-        self._valid_workers = workerStatus["ONLINE"]
-        self._unknown_workers = workerStatus["UNKNOWN"]
-        self._invalid_workers = workerStatus["DEAD"]
-        self._inactive_workers = workerStatus["OFFLINE"]
-        self._total_alerts = self._unknown_workers + self._invalid_workers + self._inactive_workers
+        self._hrate10m = float(hashrate[0])
+        self._hrate1h = float(hashrate[1])
+        self._hrate24h = float(hashrate[2])
+        self._total_workers = int(numOfWorkers)
+        self._valid_workers = int(workerStatus["ONLINE"])
+        self._unknown_workers = int(workerStatus["UNKNOWN"])
+        self._invalid_workers = int(workerStatus["DEAD"])
+        self._inactive_workers = int(workerStatus["OFFLINE"])
+        self._total_alerts = int(self._unknown_workers + self._invalid_workers + self._inactive_workers)
         self._unit_of_measurement = "H/s"        
         self._state = None
     
@@ -256,7 +249,7 @@ class SBICryptoStatusSensor(SensorEntity):
             self._inactive_workers = type["status"]["workerStatus"]["OFFLINE"]
             self._total_alerts = self._unknown_workers + self._invalid_workers + self._inactive_workers
             
-            self._state = self._hrate10m
+            self._state = float(self._hrate10m)
             
             break
                 
