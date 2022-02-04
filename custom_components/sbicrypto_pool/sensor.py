@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.components.sensor import SensorEntity
 
+import logging
+
 
 ATTRIBUTION = "Data provided by SBICrypto"
 
@@ -29,8 +31,12 @@ ATTR_COIN = "coin"
 
 DATA_SBICRYPTO = "sbicrypto_pool_cache"
 
+_LOGGER = logging.getLogger(__name__)
+
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Setup the SBICrypto sensors."""
+
+    _LOGGER.debug(f"discovery_info")
 
     if discovery_info is None:
         return
@@ -76,7 +82,7 @@ class SBICryptoWorkerSensor(SensorEntity):
         self._unit_of_measurement = "H/s"        
         self._state = None
         
-        self._status_vars = ["UNKNOWN", "ONLINE", "DEAD", "OFFLINE"]
+        self._status_vars = { "UNKNOWN": "unknown", "ONLINE": "valid", "DEAD": "invalid", "OFFLINE": "inactive" }
         self._status_icons = ["mdi:sync-off", "mdi:server-network", "mdi:server-network-off", "mdi:power-plug-off"]
 
     @property
