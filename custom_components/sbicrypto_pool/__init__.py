@@ -153,7 +153,7 @@ class SBICryptoData:
                         _LOGGER.debug(f"Mining status updated for {account} ({algoname}) from pool-api.sbicrypto.com")    
                                       
         except (SBICryptoAPIException, SBICryptoRequestException) as e:
-            _LOGGER.error(f"Error fetching mining data from sbicrypto.{self.tld}: {e.message}")
+            _LOGGER.error(f"Error fetching mining data from pool-api.sbicrypto.com: {e.message}")
             return False                                       
             
             
@@ -299,20 +299,21 @@ class SBICryptoPoolClient():
 class SBICryptoAPIException(Exception):
 
     def __init__(self, response, status_code, text):
-        self.code = 0
+        self.error = ''
         try:
             json_res = json.loads(text)
         except ValueError:
             self.message = 'Invalid JSON error message from SBICrypto: {}'.format(response.text)
         else:
-            self.code = json_res['code']
-            self.message = json_res['msg']
+            self.error = json_res['error']
+            self.description = json_res['error_description']
+            
         self.status_code = status_code
         self.response = response
         self.request = getattr(response, 'request', None)
 
     def __str__(self):  # pragma: no cover
-        return 'APIError(code=%s): %s' % (self.code, self.message)
+        return 'APIError(code=%s): %s. %s' % (self.status_code, self.error, self.description)
 
 
 class SBICryptoRequestException(Exception):
