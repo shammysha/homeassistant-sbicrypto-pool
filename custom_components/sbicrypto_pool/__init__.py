@@ -93,6 +93,7 @@ class SBICryptoData:
         _LOGGER.debug(f"Fetching mining data from pool-api.sbicrypto.com")
         try:        
             if "accounts" in self.mining:
+                coins = []
                 status = self.client.get_account();
                 accounts = status.get("subaccounts", [])
                 
@@ -102,6 +103,8 @@ class SBICryptoData:
                     for account in accounts:
                         accName = account["subaccountName"]
                         accCoin = account["currentMiningCurrency"]["code"].lower()
+                        
+                        coins[account["currentMiningCurrency"]["id"]] = accCoin
                         
                         self.mining["accounts"][accName] = {}                                                
                         
@@ -121,6 +124,9 @@ class SBICryptoData:
                         if workers_list:
                             for worker in workers_list:
                                 if accName == worker["subaccount"]:
+                                    worker["hashrates"] = [ hr * 1000000 for hr in worker["hashrates"] ]
+                                    worker.pop("coinId", None)
+                                    
                                     workers.append(worker)
                                     
                                     if worker["state"] == "":
@@ -132,8 +138,6 @@ class SBICryptoData:
                                     elif worker["state"] == "ONLINE":
                                         status["workerStatus"]["ONLINE"] += 1                                         
                                
-                                    worker["hashrates"] = [ hr / 100000 for hr in worker["hashrates"] ]
-
                                     status["hashrate"][0] += worker["hashrates"][0]
                                     status["hashrate"][1] += worker["hashrates"][1]
                                     status["hashrate"][2] += worker["hashrates"][2]
