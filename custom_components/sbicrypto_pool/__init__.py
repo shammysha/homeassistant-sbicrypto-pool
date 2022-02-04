@@ -161,7 +161,7 @@ class SBICryptoPoolClient():
     API_VERSION = 'v1'
     API_URL = 'https://pool-api.sbicrypto.com/api/external/{}'
     
-    REQUEST_TIMEOUT: float = 10    
+    REQUEST_TIMEOUT: float = 20    
     
     
     def __init__(
