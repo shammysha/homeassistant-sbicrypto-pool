@@ -132,19 +132,16 @@ class SBICryptoData:
                                     elif worker["state"] == "ONLINE":
                                         status["workerStatus"]["ONLINE"] += 1                                         
                                
-                                    status["numOfWorkers"] += 1
-                                    
-                                    for hr in worker["hashrates"]:
-                                        hr = float(hr) / 1000000  
-                                    
+                                    worker["hashrates"] = [ hr / 100000 for hr in worker["hashrates"] ]
+
                                     status["hashrate"][0] += worker["hashrates"][0]
                                     status["hashrate"][1] += worker["hashrates"][1]
                                     status["hashrate"][2] += worker["hashrates"][2]
                                     
+                                    status["numOfWorkers"] += 1
+                                    
                             if workers:
-                                status["hashrate"][0] = status["hashrate"][0] / status["numOfWorkers"]
-                                status["hashrate"][1] = status["hashrate"][1] / status["numOfWorkers"]
-                                status["hashrate"][2] = status["hashrate"][2] / status["numOfWorkers"]                         
+                                status["hashrate"] = [  hr / status["numOfWorkers"] for hr in status["hashrate"] ]
                                 
                                 self.mining["accounts"][accName].update({ "workers": workers })
                                 _LOGGER.debug(f"Mining workers updated for {accName} from pool-api.sbicrypto.com")

@@ -83,7 +83,7 @@ class SBICryptoWorkerSensor(SensorEntity):
         self._state = None
         
         self._status_vars = { "UNKNOWN": "unknown", "ONLINE": "valid", "DEAD": "invalid", "OFFLINE": "inactive" }
-        self._status_icons = ["mdi:sync-off", "mdi:server-network", "mdi:server-network-off", "mdi:power-plug-off"]
+        self._status_icons = { "UNKNOWN": "mdi:sync-off", "ONLINE": "mdi:server-network", "DEAD": "mdi:server-network-off", "OFFLINE": "mdi:power-plug-off" }
 
     @property
     def name(self):
